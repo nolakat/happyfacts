@@ -1,31 +1,37 @@
 <template>
-    <div id="happy__window">
+
         <div class="happy-fact__container">
-            <h1>HAPPY FACT</h1>
-            <h3>{{activeFact.fact}}</h3>
-            <h5><a :href="activeFact.source" target="_blank">Source</a></h5>
+            <div class="happy-fact__inner">
+                <h5 class="happy-fact__label">HAPPY FACT #{{activeNumber}}</h5>
+                <h3>{{activeFact.fact}}</h3>
+                <h5><a :href="activeFact.source" target="_blank">Source</a></h5>
+            </div>
         </div>
-    </div>
 </template>
 <script>
+ /* eslint-disable */
+
 
 export default {
     name: 'HappyFact',
-    props: ['activeFact']
+    props: ['activeFact', 'activeNumber'],
 }
 </script>
 
 <style>
-#happy__window{
-    display: flex;
-    height: 100%;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-}
 
 .happy-fact__container{
     border: 1px solid #555;
     padding: 2em;
+    max-width: 75vw;
+}
+
+.happy-fact__label{
+    letter-spacing: .5px;
+    padding-bottom: 1px;
+    border-bottom: 1px solid red;
+    width: fit-content;
+    display: table;
+    margin: 0 auto;
 }
 </style>

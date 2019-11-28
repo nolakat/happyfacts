@@ -1,7 +1,10 @@
 
 <template>
   <div id="app">
-    <HappyFact :activeFact="facts[factGenerator]"/>
+    <div id="happy__window" :style="[baseStyle]">
+      <Loading v-if="isLoading" />
+      <HappyFact v-else :activeFact="facts[randomGenerator]" :activeNumber="randomGenerator"/>
+    </div>
   </div>
 </template>
 
@@ -9,37 +12,54 @@
  /* eslint-disable */
 
 import HappyFact from './components/HappyFact.vue';
-import db from './db'
+import Loading from './components/Loading.vue';
+import db from './db';
+import { colorPairs } from './config/colors';
+
 
 export default {
   name: 'app',
   components: {
-    HappyFact
+    HappyFact,
+    Loading
   },
   data: function(){
     return{
-      test: [1, 2],
-      facts: [],
+      isLoading: true,
+      color_block: '',
+      facts: []
     }
   },
   computed:{
-    factGenerator: function(){
+    randomGenerator: function(){
       return Math.round(Math.random());
+    },
+    baseStyle: function(){
+       return {
+                background: `${this.color_block[0]}`,
+                color: `${this.color_block[1]}`
+              }
     }
   },
   created(){
-    db.collection('facts').get().then(querySnapshot => {
-      querySnapshot.forEach( doc => {
-        console.log(doc.data())
+    this.generateColors();
+    this.fetchFacts();
+  },
+  methods: {
+    generateColors(){
+      const colors = colorPairs[Math.floor(Math.random() * colorPairs.length)];
 
-        this.facts.push(doc.data());
+        if(this.randomGenerator == 1){ colors.reverse() }
+        this.color_block = colors;
+    },
+    fetchFacts(){
+      db.collection('facts').get().then(querySnapshot => {
+        querySnapshot.forEach( doc => {
+          this.facts.push(doc.data());
+          this.isLoading = false;
+        })
       })
-    })
-
-    // this.test.map((int) => {
-    //   console.log(int);
-    // })
-
+    }
   }
 }
 </script>
@@ -64,5 +84,14 @@ h1, h2, h3, h4, h5{
   height: 100%;
   width: 100%;
 }
+
+#happy__window{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
 
 </style>
