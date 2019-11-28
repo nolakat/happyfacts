@@ -8,13 +8,13 @@ const firebase = require("firebase");
 require("firebase/firestore");
 
 firebase.initializeApp({
-   apiKey: "AIzaSyCzD7HMSlh0gM2TgzgBZYOdlcu2eipbVJU",
+   apiKey: process.env.FIREBASE_API,
    authDomain: "happyfacts-io.firebaseapp.com",
    databaseURL: "https://happyfacts-io.firebaseio.com",
    projectId: "happyfacts-io",
    storageBucket: "happyfacts-io.appspot.com",
    messagingSenderId: "1004978812791",
-   appId: "1:1004978812791:web:e1db709b87087b66065372",
+   appId: process.env.FIREBASE_APP_ID,
    measurementId: "G-6JG4XHN9CG"
  })
 
