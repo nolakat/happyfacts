@@ -1,28 +1,57 @@
+
 <template>
   <div id="app">
-  <h5>Hey There</h5>
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <HappyFact />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+ /* eslint-disable */
+
+import HappyFact from './components/HappyFact.vue';
+import db from './db'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    HappyFact
+  },
+  data: function(){
+    return{
+      test: [1, 2]
+    }
+  },
+  created(){
+    console.log('WTF!!!');
+    console.log(this.test[1]);
+
+    this.test.map((int) => {
+      console.log(int);
+    })
+
   }
 }
 </script>
 
 <style>
+
+body,html{
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+}
+h1, h2, h3, h4, h5{
+  margin: 0px;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  height: 100%;
+  width: 100%;
 }
+
 </style>
