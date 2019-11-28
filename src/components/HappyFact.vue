@@ -3,7 +3,7 @@
         <div class="happy-fact__container">
             <h1>HAPPY FACT</h1>
             <h3>{{activeFact.fact}}</h3>
-            <h5>{{activeFact.source}}</h5>
+            <h5><a :href="activeFact.source" target="_blank">Source</a></h5>
         </div>
     </div>
 </template>

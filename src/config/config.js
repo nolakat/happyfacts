@@ -1,4 +1,7 @@
  /* eslint-disable */
+
+ // run node config.js to update firebase db
+
 const facts = require ('./facts');
 const firebase = require("firebase");
 // Required for side-effects
@@ -17,20 +20,8 @@ firebase.initializeApp({
 
 var db = firebase.firestore();
 
-// const facts =[
-//    {
-//       "fact": "FACT 3",
-//       "source": "some guy"
-//    },
-//    {
-//       "fact": "FACT 4",
-//       "source": "another guy"
-//    },
-
-// ]
-
 facts.forEach(function(obj, index) {
-   db.collection("menu").add({
+   db.collection("facts").add({
        fact: obj.fact,
        source: obj.source
    }).then(function(docRef) {
