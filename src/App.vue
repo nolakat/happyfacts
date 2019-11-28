@@ -2,8 +2,14 @@
 <template>
   <div id="app">
     <div id="happy__window" :style="[baseStyle]">
-      <Loading v-if="isLoading" />
-      <HappyFact v-else :activeFact="facts[randomGenerator]" :activeNumber="randomGenerator"/>
+        <div
+          v-touch:tap="touchHandler"
+          class="touchbar touchbar--left"></div>
+          <Loading v-if="isLoading" />
+          <HappyFact v-else :activeFact="facts[randomGenerator]" :activeNumber="randomGenerator"/>
+        <div
+          v-touch:tap="touchHandler"
+          class="touchbar touchbar--right"></div>
     </div>
   </div>
 </template>
@@ -49,7 +55,7 @@ export default {
     generateColors(){
       const colors = colorPairs[Math.floor(Math.random() * colorPairs.length)];
 
-        if(this.randomGenerator == 1){ colors.reverse() }
+        if(Math.round(Math.random()) == 1){ colors.reverse() }
         this.color_block = colors;
     },
     fetchFacts(){
@@ -59,12 +65,21 @@ export default {
           this.isLoading = false;
         })
       })
+    },
+    touchHandler(){
+      console.log('YOU TOUCHED ME!!!');
+      this.generateColors();
     }
   }
 }
 </script>
 
-<style>
+<style lang="scss">
+
+a{
+  color: inherit;
+  text-decoration: none;
+}
 
 body,html{
   height: 100%;
@@ -93,5 +108,21 @@ h1, h2, h3, h4, h5{
     justify-content: center;
 }
 
+.touchbar{
+  height: 100%;
+  width: 25%;
+  position: absolute;
+  background: #ccc;
+  opacity: .5;
+  z-index: 1;
+
+  &.touchbar--left{
+    left: 0px;
+  }
+
+  &.touchbar--right{
+    right: 0px;
+  }
+}
 
 </style>

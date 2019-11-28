@@ -24,12 +24,14 @@ export default {
     border: 1px solid #555;
     padding: 2em;
     max-width: 75vw;
+    z-index: 2;
 }
 
 .happy-fact__label{
     letter-spacing: .5px;
     padding-bottom: 1px;
-    border-bottom: 1px solid red;
+    border-bottom: 1px solid;
+    border-color: inherit;
     width: fit-content;
     display: table;
     margin: 0 auto;
