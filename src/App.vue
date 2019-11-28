@@ -1,7 +1,7 @@
 
 <template>
   <div id="app">
-    <HappyFact />
+    <HappyFact :activeFact="facts[factGenerator]"/>
   </div>
 </template>
 
@@ -18,16 +18,27 @@ export default {
   },
   data: function(){
     return{
-      test: [1, 2]
+      test: [1, 2],
+      facts: [],
+    }
+  },
+  computed:{
+    factGenerator: function(){
+      return Math.round(Math.random());
     }
   },
   created(){
-    console.log('WTF!!!');
-    console.log(this.test[1]);
+    db.collection('facts').get().then(querySnapshot => {
+      querySnapshot.forEach( doc => {
+        console.log(doc.data())
 
-    this.test.map((int) => {
-      console.log(int);
+        this.facts.push(doc.data());
+      })
     })
+
+    // this.test.map((int) => {
+    //   console.log(int);
+    // })
 
   }
 }
