@@ -2,8 +2,8 @@
         <div class="happy-fact__container">
             <div class="happy-fact__inner">
                 <h5 class="happy-fact__label">HAPPY FACT #{{activeFact.id}}</h5>
-                <h3 class="happy-fact__content">{{activeFact.fact}}</h3>
-                <h5><a :href="activeFact.source" target="_blank">Source</a></h5>
+                <h1 class="happy-fact__content">{{activeFact.fact}}</h1>
+                <h5 class="happy-fact__source"><a :href="activeFact.source" target="_blank">Source</a></h5>
             </div>
         </div>
 </template>
@@ -17,10 +17,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 
 .happy-fact__container{
-    border: 1px solid #555;
     padding: 2em;
     max-width: 75vw;
     z-index: 2;
@@ -34,6 +33,26 @@ export default {
     width: fit-content;
     display: table;
     margin: 0 auto;
+}
+
+.happy-fact__content{
+    font-size: 2.5em;
+    padding: 35px 0px;
+
+}
+
+.happy-fact__source{
+    text-transform: uppercase;
+    display: flex;
+    opacity: .75;
+    justify-content: flex-end;
+    transition: opacity .3s ease;
+
+
+    &:hover{
+        opacity: 1;
+        transition: opacity .3s ease;
+    }
 }
 
 </style>

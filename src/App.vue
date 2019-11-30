@@ -68,7 +68,8 @@ export default {
     baseStyle: function(){
        return {
                 background: `${this.color_block[0]}`,
-                color: `${this.color_block[1]}`
+                color: `${this.color_block[1]}`,
+                transition: `all .3s ease`
               }
     },
     cursorCircle: function(){
@@ -116,8 +117,14 @@ export default {
 
     },
     moveCursor(e){
-       this.xParent = e.clientX;
-       this.yParent = e.clientY;
+      //  this.xParent = e.clientX;
+      //  this.yParent = e.clientY;
+      gsap.to("#svg-pointer",
+      {
+        x: e.clientX,
+        y: e.clientY,
+        duration: 2,
+        ease: "elastic.out(1, 0.3)"  });
     },
     touchHandler(){
       this.generateColors();
@@ -170,8 +177,6 @@ h1, h2, h3, h4, h5{
   height: 100%;
   width: 25%;
   position: absolute;
-  background: #ccc;
-  opacity: .5;
   z-index: 1;
 
   &.touchbar--left{
