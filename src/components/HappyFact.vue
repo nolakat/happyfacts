@@ -1,9 +1,8 @@
 <template>
-
         <div class="happy-fact__container">
             <div class="happy-fact__inner">
-                <h5 class="happy-fact__label">HAPPY FACT #{{activeNumber}}</h5>
-                <h3>{{activeFact.fact}}</h3>
+                <h5 class="happy-fact__label">HAPPY FACT #{{activeFact.id}}</h5>
+                <h3 class="happy-fact__content">{{activeFact.fact}}</h3>
                 <h5><a :href="activeFact.source" target="_blank">Source</a></h5>
             </div>
         </div>
@@ -14,7 +13,7 @@
 
 export default {
     name: 'HappyFact',
-    props: ['activeFact', 'activeNumber'],
+    props: ['activeFact'],
 }
 </script>
 
@@ -36,4 +35,5 @@ export default {
     display: table;
     margin: 0 auto;
 }
+
 </style>

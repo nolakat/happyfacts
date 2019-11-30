@@ -1,12 +1,26 @@
 
 <template>
-  <div id="app">
-    <div id="happy__window" :style="[baseStyle]">
+  <div id="app"
+       v-touch:swipe.top="swipeHandler"
+       v-touch:swipe.bottom="swipeHandler"
+       :style="cssProps">
+    <div id="happy__window"
+      :style="[baseStyle]">
+      <svg
+        id="svg-pointer"
+         :style="cursorCircle">
+          <circle class="svg-point" cx="100" cy="100" r="3" stroke-width=".5" />
+      </svg>
+
         <div
           v-touch:tap="touchHandler"
           class="touchbar touchbar--left"></div>
+
           <Loading v-if="isLoading" />
-          <HappyFact v-else :activeFact="facts[randomGenerator]" :activeNumber="randomGenerator"/>
+          <HappyFact v-else
+            :activeFact="facts[active_index]"
+            />
+
         <div
           v-touch:tap="touchHandler"
           class="touchbar touchbar--right"></div>
@@ -21,60 +35,104 @@ import HappyFact from './components/HappyFact.vue';
 import Loading from './components/Loading.vue';
 import db from './db';
 import { colorPairs } from './config/colors';
+import { shuffle } from 'lodash';
+import gsap from "gsap";
+
 
 
 export default {
   name: 'app',
   components: {
     HappyFact,
-    Loading
+    Loading,
   },
   data: function(){
     return{
       isLoading: true,
       color_block: '',
-      facts: []
+      facts: [],
+      active_index: 0,
+      xParent: 0,
+      yParent: 0,
     }
   },
   computed:{
     randomGenerator: function(){
       return Math.round(Math.random());
     },
+    cssProps: function(){
+      return{
+        '--font-color': this.color_block[1]
+      }
+    },
     baseStyle: function(){
        return {
                 background: `${this.color_block[0]}`,
                 color: `${this.color_block[1]}`
               }
+    },
+    cursorCircle: function(){
+         return `transform: translate(${this.xParent}px, ${this.yParent}px)`;
     }
   },
   created(){
     this.generateColors();
     this.fetchFacts();
   },
+  mounted(){
+    document.body.addEventListener("mousemove", e =>{
+      this.moveCursor(e);
+    });
+  },
   methods: {
     generateColors(){
       const colors = colorPairs[Math.floor(Math.random() * colorPairs.length)];
-
         if(Math.round(Math.random()) == 1){ colors.reverse() }
         this.color_block = colors;
     },
     fetchFacts(){
-      db.collection('facts').get().then(querySnapshot => {
-        querySnapshot.forEach( doc => {
-          this.facts.push(doc.data());
+      db.collection('facts').get().then( querySnapshot => {
+        let i = 0;
+        querySnapshot.forEach((doc) => {
+          let obj = doc.data();
+          obj.id = i;
+          this.facts.push(obj);
           this.isLoading = false;
+          this.shufflePack();
+          i++;
         })
       })
     },
+    shufflePack(){
+      const shuffled_pack = _.shuffle(this.facts);
+      this.facts = shuffled_pack;
+    },
+    moveAlong(){
+      if( this.active_index != this.facts.length-1){
+        this.active_index++;
+      } else {
+        this.active_index = 0;
+      }
+
+    },
+    moveCursor(e){
+       this.xParent = e.clientX;
+       this.yParent = e.clientY;
+    },
     touchHandler(){
-      console.log('YOU TOUCHED ME!!!');
       this.generateColors();
+      this.moveAlong();
+    },
+    swipeHandler(){
+       this.generateColors();
+       this.moveAlong();
     }
   }
 }
 </script>
 
 <style lang="scss">
+
 
 a{
   color: inherit;
@@ -124,5 +182,18 @@ h1, h2, h3, h4, h5{
     right: 0px;
   }
 }
+
+#svg-pointer{
+  top: -100px;
+  left: -100px;
+  position: absolute;
+
+  .svg-point{
+    fill: var(--font-color);
+  }
+}
+
+
+
 
 </style>
