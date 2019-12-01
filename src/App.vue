@@ -8,21 +8,49 @@
       :style="[baseStyle]">
       <svg
         id="svg-pointer"
-         :style="cursorCircle">
+        v-if="hover == 'circle'"
+        class="svg-circle"
+        :style="cursorCircle">
           <circle class="svg-point" cx="100" cy="100" r="3" stroke-width=".5" />
       </svg>
+      <svg
+        id="svg-pointer"
+        v-else-if="hover == 'arrow_right'"
+        class="svg-arrow"
+        :style="cursorCircle"
+        version="1.1" width="200px" x="0px" y="0px" viewBox="0 0 58.6 52.6" xml:space="preserve">
+        <g transform="translate(0,-952.36218)">
+          <path d="M0,978.6l2.8,3.3l20,23l7.5-6.6l-12.8-14.7h41.1v-10H17.6l12.8-14.7l-7.5-6.6l-20,23L0,978.6L0,978.6z"/>
+        </g>
+      </svg>
+      <svg
+        id="svg-pointer"
+        v-else-if="hover == 'arrow_left'"
+        class="svg-arrow svg-arrow--left"
+        version="1.1" width="200px" x="0px" y="0px" viewBox="0 0 58.6 52.6"
+        style="enable-background:new 0 0 58.6 52.6;" xml:space="preserve">
+      <g transform="translate(0,-952.36218)">
+        <path d="M58.6,978.6l-2.8-3.3l-20-23l-7.5,6.6l12.8,14.7H0l0,10h41.1l-12.8,14.7l7.5,6.6l20-23L58.6,978.6L58.6,978.6z"/>
+      </g>
+      </svg>
+
 
         <div
           v-touch:tap="touchHandler"
+           @mouseover="hover = 'arrow_right'"
+           @mouseleave="hover = 'circle'"
           class="touchbar touchbar--left"></div>
 
           <Loading v-if="isLoading" />
-          <HappyFact v-else
+          <HappyFact
+            v-else
             :activeFact="facts[active_index]"
             />
 
         <div
           v-touch:tap="touchHandler"
+          @mouseover="hover = 'arrow_left'"
+          @mouseleave="hover = 'circle'"
           class="touchbar touchbar--right"></div>
     </div>
   </div>
@@ -54,6 +82,7 @@ export default {
       active_index: 0,
       xParent: 0,
       yParent: 0,
+      hover: 'circle'
     }
   },
   computed:{
@@ -188,7 +217,7 @@ h1, h2, h3, h4, h5{
   }
 }
 
-#svg-pointer{
+.svg-circle{
   top: -100px;
   left: -100px;
   position: absolute;
@@ -196,6 +225,17 @@ h1, h2, h3, h4, h5{
   .svg-point{
     fill: var(--font-color);
   }
+}
+
+.svg-arrow{
+    top: -95px;
+    left: 0px;
+    position: absolute;
+    fill: var(--font-color);
+
+    &.svg-arrow--left{
+      left: -200px;
+    }
 }
 
 
