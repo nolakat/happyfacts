@@ -27,5 +27,10 @@ module.exports =[
    {
       "fact": "In Welsh folklore Corgis were said to be the preferred transportation method of fairies, and that the breed's markings were left on its coat by fairy harnesses and saddles.",
       "source": "https://en.wikipedia.org/wiki/Welsh_Corgi"
+   },
+   {
+      "fact": "The term 'Astronaut' comes from Greek words that mean 'Star' and 'Sailor'",
+      "source": "https://en.wikipedia.org/wiki/Astronaut"
    }
+
 ]

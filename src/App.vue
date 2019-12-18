@@ -6,34 +6,7 @@
        :style="cssProps">
     <div id="happy__window"
       :style="[baseStyle]">
-      <svg
-        id="svg-pointer"
-        v-if="hover == 'circle'"
-        class="svg-circle"
-        :style="cursorCircle">
-          <circle class="svg-point" cx="100" cy="100" r="3" stroke-width=".5" />
-      </svg>
-      <svg
-        id="svg-pointer"
-        v-else-if="hover == 'arrow_right'"
-        class="svg-arrow"
-        :style="cursorCircle"
-        version="1.1" width="200px" x="0px" y="0px" viewBox="0 0 58.6 52.6" xml:space="preserve">
-        <g transform="translate(0,-952.36218)">
-          <path d="M0,978.6l2.8,3.3l20,23l7.5-6.6l-12.8-14.7h41.1v-10H17.6l12.8-14.7l-7.5-6.6l-20,23L0,978.6L0,978.6z"/>
-        </g>
-      </svg>
-      <svg
-        id="svg-pointer"
-        v-else-if="hover == 'arrow_left'"
-        class="svg-arrow svg-arrow--left"
-        version="1.1" width="200px" x="0px" y="0px" viewBox="0 0 58.6 52.6"
-        style="enable-background:new 0 0 58.6 52.6;" xml:space="preserve">
-      <g transform="translate(0,-952.36218)">
-        <path d="M58.6,978.6l-2.8-3.3l-20-23l-7.5,6.6l12.8,14.7H0l0,10h41.1l-12.8,14.7l7.5,6.6l20-23L58.6,978.6L58.6,978.6z"/>
-      </g>
-      </svg>
-
+      <NewCursor :hover="hover"/>
 
         <div
           v-touch:tap="touchHandler"
@@ -61,10 +34,10 @@
 
 import HappyFact from './components/HappyFact.vue';
 import Loading from './components/Loading.vue';
+import NewCursor from './components/NewCursor.vue';
 import db from './db';
 import { colorPairs } from './config/colors';
 import { shuffle } from 'lodash';
-import gsap from "gsap";
 
 
 
@@ -73,6 +46,7 @@ export default {
   components: {
     HappyFact,
     Loading,
+    NewCursor
   },
   data: function(){
     return{
@@ -80,8 +54,6 @@ export default {
       color_block: '',
       facts: [],
       active_index: 0,
-      xParent: 0,
-      yParent: 0,
       hover: 'circle'
     }
   },
@@ -91,7 +63,8 @@ export default {
     },
     cssProps: function(){
       return{
-        '--font-color': this.color_block[1]
+        '--font-color': this.color_block[1],
+        '--bg-color': this.color_block[0]
       }
     },
     baseStyle: function(){
@@ -100,9 +73,6 @@ export default {
                 color: `${this.color_block[1]}`,
                 transition: `all .3s ease`
               }
-    },
-    cursorCircle: function(){
-         return `transform: translate(${this.xParent}px, ${this.yParent}px)`;
     }
   },
   created(){
@@ -110,9 +80,7 @@ export default {
     this.fetchFacts();
   },
   mounted(){
-    document.body.addEventListener("mousemove", e =>{
-      this.moveCursor(e);
-    });
+
   },
   methods: {
     generateColors(){
@@ -145,16 +113,6 @@ export default {
       }
 
     },
-    moveCursor(e){
-      //  this.xParent = e.clientX;
-      //  this.yParent = e.clientY;
-      gsap.to("#svg-pointer",
-      {
-        x: e.clientX,
-        y: e.clientY,
-        duration: 2,
-        ease: "elastic.out(1, 0.3)"  });
-    },
     touchHandler(){
       this.generateColors();
       this.moveAlong();
@@ -168,6 +126,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 
 
 a{
@@ -216,29 +175,4 @@ h1, h2, h3, h4, h5{
     right: 0px;
   }
 }
-
-.svg-circle{
-  top: -100px;
-  left: -100px;
-  position: absolute;
-
-  .svg-point{
-    fill: var(--font-color);
-  }
-}
-
-.svg-arrow{
-    top: -95px;
-    left: 0px;
-    position: absolute;
-    fill: var(--font-color);
-
-    &.svg-arrow--left{
-      left: -200px;
-    }
-}
-
-
-
-
 </style>
