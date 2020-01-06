@@ -10,6 +10,7 @@
           <circle class="svg-point" cx="100" cy="100" r="3" stroke-width=".5" />
           </svg>
         </div>
+
         <div
         v-else-if="hover == 'arrow_left'"
         >
@@ -31,6 +32,10 @@
           x="0px" y="0px" viewBox="0 0 100 80" style="enable-background:new 0 0 100 80;">
             <polygon class="arrow" points="39.6,8.7 46.9,16.1 28.2,34.8 91.8,34.8 91.8,45.2 28.2,45.2 46.9,63.9 39.6,71.3 8.2,40 "/>
         </svg>
+        </div>
+        <div
+          v-else-if="hover == 'pointer'">
+
         </div>
       </transition>
 </template>
@@ -89,6 +94,13 @@ export default{
   .svg-point{
     fill: var(--font-color);
   }
+}
+
+.svg-hand{
+  position: absolute;
+  top: 0px;
+  left: -25px;
+  fill: var(--font-color);
 }
 
 .svg-test{

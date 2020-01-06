@@ -19,40 +19,6 @@ export default {
 
 <style lang="scss">
 
-.happy-fact__container{
-    padding: 2em;
-    max-width: 75vw;
-    z-index: 2;
-}
 
-.happy-fact__label{
-    letter-spacing: .5px;
-    padding-bottom: 1px;
-    border-bottom: 1px solid;
-    border-color: inherit;
-    width: fit-content;
-    display: table;
-    margin: 0 auto;
-}
-
-.happy-fact__content{
-    font-size: 2.5em;
-    padding: 35px 0px;
-
-}
-
-.happy-fact__source{
-    text-transform: uppercase;
-    display: flex;
-    opacity: .75;
-    justify-content: flex-end;
-    transition: opacity .3s ease;
-
-
-    &:hover{
-        opacity: 1;
-        transition: opacity .3s ease;
-    }
-}
 
 </style>

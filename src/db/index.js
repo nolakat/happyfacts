@@ -2,6 +2,9 @@
 import firebase from 'firebase'
 import 'firebase/firestore'
 
+ /* eslint-disable */
+
+
 const firebaseConfig = {
     apiKey: "AIzaSyCzD7HMSlh0gM2TgzgBZYOdlcu2eipbVJU",
     authDomain: "happyfacts-io.firebaseapp.com",
@@ -16,5 +19,11 @@ const firebaseConfig = {
   // Initialize Firebase
   const firebaseapp = firebase.initializeApp(firebaseConfig)
 
+  firebaseapp.auth().signInAnonymously().catch(function(error) {
+    // Handle Errors here.
+
+    console.log('error', error);
+    // ...
+  });
 
   export default firebaseapp.firestore()
