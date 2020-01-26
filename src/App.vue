@@ -114,7 +114,6 @@ export default {
   mounted(){
     document.body.addEventListener("mousemove", e =>{
       let pw = document.getElementById('testhand');
-      console.log('pw', pw);
             this.rotateOnMouse(e, pw );
         });
   },
@@ -168,7 +167,7 @@ export default {
       var radians = Math.atan2(mouse_x - center_x, mouse_y - center_y);
       var degree = (radians * (180 / Math.PI) * -1) + 100;
       this.degree=  degree;
-      //            window.console.log("de="+degree+","+radians);
+      window.console.log("de="+degree+","+radians);
       // $(pw).css('-moz-transform', 'rotate(' + degree + 'deg)');
       // $(pw).css('-webkit-transform', 'rotate(' + degree + 'deg)');
       // $(pw).css('-o-transform', 'rotate(' + degree + 'deg)');
