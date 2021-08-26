@@ -189,6 +189,7 @@ a{
 body,html{
   height: 100%;
   width: 100%;
+  overflow:hidden;
   margin: 0px;
 }
 h1, h2, h3, h4, h5{
@@ -260,7 +261,6 @@ h1, h2, h3, h4, h5{
     width: fit-content;
     float: right;
     padding: 25px;
-    border: 2px solid red;
 
 
     &:hover{
@@ -277,5 +277,6 @@ h1, h2, h3, h4, h5{
   top: 31px;
   // transform: rotate(291deg);
   transform-origin: top;
+  opacity: 0;
 }
 </style>
